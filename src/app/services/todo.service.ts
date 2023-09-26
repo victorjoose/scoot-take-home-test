@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TodoService {
-  private baseUrl = 'http://localhost:3000'; // Replace with your backend server URL
+  private baseUrl = 'http://localhost:3000';
 
   constructor(private http: HttpClient) {}
 

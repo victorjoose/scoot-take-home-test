@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoItem, Priority } from '../../models/todo-item.model';
 import { TodoService } from 'src/app/services/todo.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -56,7 +55,6 @@ export class HomeComponent implements OnInit {
     };
 
     this.todoService.createTodo(newTodo).subscribe((response) => {
-      console.log('Todo created:', response);
       this.loadTodos();
     });
   }
@@ -69,7 +67,6 @@ export class HomeComponent implements OnInit {
 
   editTodo(id: string, updatedTodo: any): void {
     this.todoService.editTodo(id, updatedTodo).subscribe((response) => {
-      console.log('Todo updated:', response);
       this.loadTodos();
       this.isEditing = false;
     });
@@ -78,7 +75,6 @@ export class HomeComponent implements OnInit {
 
   deleteTodo(id: string): void {
     this.todoService.deleteTodo(id).subscribe(() => {
-      console.log('Todo deleted');
       this.loadTodos();
     });
   }
