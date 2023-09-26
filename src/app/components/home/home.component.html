@@ -1,0 +1,110 @@
+<app-header></app-header>
+<div class="container">
+    <div class="todo-container">
+        <div class="add-todo-section">
+            <form lang="en" (submit)="addTodo()" class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input placeholder="Item description" type="text" id="description" class="form-control"
+                             [(ngModel)]="newTodo.description" name="description" required>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="dueDate">Due Date</label>
+                        <input type="date" id="dueDate" class="form-control" [(ngModel)]="newTodo.dueDate"
+                             name="dueDate" required>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="priority">Priority</label>
+                        <select id="priority" class="form-control" [(ngModel)]="newTodo.priority" name="priority"
+                             required>
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="control-buttons">
+                        <button type="submit" class="btn btn-primary">Add New</button>
+                        <button type="button" class="btn btn-secondary" (click)="clearData()">Clear</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div *ngIf="informDescriptionWarning" class="text-danger missing-description">Please inform a description for
+            your new todo item.</div>
+
+        <div *ngIf="!todos || todos.length === 0" class="empty-list"> New items will be displayed here</div>
+
+        <div *ngIf="todos && todos.length > 0" class="todo-list">
+            <div class="row d-flex mb-5">
+                <div class="col-10">
+                    <h2>TODO List</h2>
+                </div>
+                <div class="col-2 text-end">
+                    <button class="btn btn-primary" (click)="toggleFilters()">
+                        {{ showFilters ? 'Hide Filters' : 'Show Filters' }}
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filter section -->
+            <div class="row mb-3 filter-section" *ngIf="showFilters">
+                <div class="col-sm-6">
+                    <label class="me-2" for="descriptionFilter">Filter by Description:</label>
+                    <input type="text" id="descriptionFilter" [(ngModel)]="descriptionFilter" />
+                </div>
+                <div class="col-sm-4">
+                    <label class="me-2" for="priorityFilter">Filter by Priority:</label>
+                    <select id="priorityFilter" [(ngModel)]="priorityFilter">
+                        <option value="">All</option>
+                        <option value="high">High</option>
+                        <option value="medium">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </div>
+                <div class="col-sm-2 text-end">
+                    <button class="btn btn-warning" (click)="clearFilters()">Clear filters</button>
+                </div>
+            </div>
+
+            <table>
+                <tr>
+                    <th>Description</th>
+                    <th>Due Date</th>
+                    <th>Priority</th>
+                </tr>
+            </table>
+            <table>
+                <tr *ngFor="let todo of filteredTodos">
+                    <td class="todo-item">
+                        <input type="text" [(ngModel)]="todo.description" [disabled]="!isEditing" />
+                    </td>
+                    <td class="todo-item">
+                        <input type="date" [(ngModel)]="todo.dueDate" [disabled]="!isEditing" />
+                    </td>
+                    <td class="todo-item">
+                        <select [(ngModel)]="todo.priority" [disabled]="!isEditing">
+                            <option value="high">High</option>
+                            <option value="medium">Medium</option>
+                            <option value="low">Low</option>
+                        </select>
+                    </td>
+                    <td class="todo-item todo-buttons">
+                        <button class="btn btn-secondary" (click)="isEditing ? editTodo(todo.id, todo) : toggleEdit()">
+                            {{ isEditing ? 'Save' : 'Edit' }}
+                        </button>
+                        <button class="btn btn-danger" (click)="deleteTodo(todo.id)">Delete</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>

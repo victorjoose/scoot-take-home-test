@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css?family=Trirong");
+
+
+html {
+    height: 100vh;
+    width: 100vw;
+}
+
+*{
+    font-family: "Trirong", serif;
+}
+
+.btn-primary,
+.btn-primary:hover {
+    background: #393263;
+    border-color: #393263;
+}
+
+.container {
+    padding: 0 1rem;
+}
